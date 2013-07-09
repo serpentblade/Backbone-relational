@@ -1463,7 +1463,8 @@
 			}
 
 			this.acquire();
-			var json = Backbone.Model.prototype.toJSON.call( this, options );
+			var json = Backbone.Model.prototype.toJSON.call( this, options ),
+				mode = options.mode || 'default';
 
 			if ( this.constructor._superModel && !( this.constructor._subModelTypeAttribute in json ) ) {
 				json[ this.constructor._subModelTypeAttribute ] = this.constructor._subModelTypeValue;
@@ -1473,6 +1474,11 @@
 				var related = json[ rel.key ],
 					includeInJSON = rel.options.includeInJSON,
 					value = null;
+
+				// If we have an object get the value based on the current toJSON() mode
+				if(_.isObject(includeInJSON)) {
+					includeInJSON = includeInJSON[mode] || includeInJSON['default'] || true;
+				}
 
 				if ( includeInJSON === true ) {
 					if ( related && _.isFunction( related.toJSON ) ) {
