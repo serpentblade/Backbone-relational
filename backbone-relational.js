@@ -1464,7 +1464,7 @@
 
 			this.acquire();
 			var json = Backbone.Model.prototype.toJSON.call( this, options ),
-				mode = options.mode || 'default';
+				mode = (options || {}).mode || 'default';
 
 			if ( this.constructor._superModel && !( this.constructor._subModelTypeAttribute in json ) ) {
 				json[ this.constructor._subModelTypeAttribute ] = this.constructor._subModelTypeValue;
