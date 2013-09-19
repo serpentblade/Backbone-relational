@@ -1462,6 +1462,10 @@
 				json[ this.constructor._subModelTypeAttribute ] = this.constructor._subModelTypeValue;
 			}
 
+			if(!json._cid) {
+                json._cid = this.cid;
+            }
+
 			_.each( this._relations, function( rel ) {
 				var related = json[ rel.key ],
 					includeInJSON = rel.options.includeInJSON,
